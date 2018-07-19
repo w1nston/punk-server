@@ -31,7 +31,9 @@ const createExpressServer = () => {
 
       const server = app.listen(PORT, () => {
         logger.info(`Server started. Listening on port ${PORT}.`);
-        process.send('ready');
+        if (process.send && typeof process.send === 'function') {
+          process.send('ready');
+        }
       });
 
       process.on('SIGINT', () => {
